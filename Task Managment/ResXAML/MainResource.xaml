@@ -1,0 +1,15 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:viewmodel ="clr-namespace:Task_Managment.ViewModels"
+                    >
+
+    <viewmodel:TasksViewModel x:Key="TasksViewModelVM"></viewmodel:TasksViewModel>
+    <viewmodel:HomeViewModel x:Key="HomeViewModelVM"></viewmodel:HomeViewModel>
+    
+    <viewmodel:CalendarViewModel x:Key="CalendarVM"></viewmodel:CalendarViewModel>
+    <viewmodel:EventWindowViewModel x:Key="EventVM"></viewmodel:EventWindowViewModel>
+    <viewmodel:UCdayViewModel x:Key="UCdayVM"></viewmodel:UCdayViewModel>
+    <viewmodel:MainWindowViewModel x:Key="MainWindowVM"></viewmodel:MainWindowViewModel>
+    <viewmodel:vmNotebookHomeView x:Key="NoteBookVM"></viewmodel:vmNotebookHomeView>
+
+</ResourceDictionary>

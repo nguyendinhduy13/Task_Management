@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="d3d88ebf-23cb-44cb-b0ec-7688e048e0cd" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/Task Managment/App.config" beforeDir="false" afterPath="$PROJECT_DIR$/Task Managment/App.config" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Task Managment/Commands/DeleteCommand.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Task Managment/Commands/DeleteCommand.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Task Managment/Commands/EndRenameCommand.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Task Managment/Commands/EndRenameCommand.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Task Managment/Commands/NewSubtaskCommand.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Task Managment/Commands/NewSubtaskCommand.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Task Managment/Commands/NewTaskCommand.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Task Managment/Commands/NewTaskCommand.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Task Managment/Commands/NewTasklistCommand.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Task Managment/Commands/NewTasklistCommand.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Task Managment/Commands/StartRenameCommand.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Task Managment/Commands/StartRenameCommand.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Task Managment/DataAccess/DataAcessForTask.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Task Managment/DataAccess/DataAcessForTask.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Task Managment/ResXAML/MainResource.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/Task Managment/ResXAML/MainResource.xaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Task Managment/Task Managment.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Task Managment/Task Managment.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Task Managment/ViewModels/TasksViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Task Managment/ViewModels/TasksViewModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Task Managment/Views/TaskHomeView.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/Task Managment/Views/TaskHomeView.xaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Task Managment/Views/ToDoTasks.xaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Task Managment/Views/ToDoTasks.xaml.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Task Managment/Views/pNoteHomeView.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/Task Managment/Views/pNoteHomeView.xaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Task Managment/packages.config" beforeDir="false" afterPath="$PROJECT_DIR$/Task Managment/packages.config" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="29MVBQbsNhZgCPm9T088W7AyKEu" />
+  <component name="ProjectViewState">
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="RunOnceActivity.cidr.known.project.marker" value="true" />
+    <property name="android.sdk.path" value="$USER_HOME$/AppData/Local/Android/Sdk" />
+    <property name="cidr.known.project.marker" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../Chat-Application/ChatApplication/app" />
+    <property name="settings.editor.selected.configurable" value="AndroidSdkUpdater" />
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="d3d88ebf-23cb-44cb-b0ec-7688e048e0cd" name="Changes" comment="" />
+      <created>1652922806086</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1652922806086</updated>
+    </task>
+    <servers />
+  </component>
+</project>

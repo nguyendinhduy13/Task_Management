@@ -1,0 +1,34 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
+using Task_Managment.ViewModels;
+
+namespace Task_Managment
+{
+    /// <summary>
+    /// Interaction logic for StartWindow.xaml
+    /// </summary>
+    public partial class StartWindowViewModels : Window
+    {
+        public StartWindowViewModels()
+        {
+            InitializeComponent();
+
+            StartWindowViewModel vm = new StartWindowViewModel();
+            this.DataContext = vm;
+            if (vm.CloseAction == null) vm.CloseAction = new Action(this.Close);
+            if (vm.HideAction == null) vm.HideAction = new Action(this.Hide);
+            if (vm.ShowAction == null) vm.ShowAction = new Action(this.Show);
+        }
+    }
+}

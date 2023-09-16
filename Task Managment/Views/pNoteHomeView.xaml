@@ -1,0 +1,501 @@
+﻿<Page x:Class="Task_Managment.Views.pNoteHomeView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:local="clr-namespace:Task_Managment.Views"
+      xmlns:z="clr-namespace:Task_Managment"
+      xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+      xmlns:dtContext="clr-namespace:Task_Managment.ViewModels"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      TextElement.Foreground="{DynamicResource MaterialDesignDarkForeground}"
+      TextElement.FontWeight="Regular"
+      TextElement.FontSize="13"
+      TextOptions.TextFormattingMode="Ideal"
+      TextOptions.TextRenderingMode="Auto"
+      Background="{DynamicResource MaterialDesignLightBackground}"
+      FontFamily="{DynamicResource MaterialDesignFont}"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Style="{StaticResource PageTasksStyle}"
+      Title="pNoteHomeView">
+
+    <Page.DataContext>
+        <dtContext:vmNoteHomeView/>
+    </Page.DataContext>
+
+    <Grid Name="grdMain">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="250" MinWidth="150" MaxWidth="500"/>
+            <ColumnDefinition Width="2"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <DockPanel Name="dpInfo" 
+                   Grid.Column="0"
+                   HorizontalAlignment="Stretch" 
+                   VerticalAlignment="Stretch" 
+                   Background="#FFE9E9E9">
+            <Grid Name="grdPageName"
+                  DockPanel.Dock="Top"
+                  HorizontalAlignment="Stretch"
+                  VerticalAlignment="Top"
+                  Margin="0 13 0 30"
+                  Height="40">
+                <materialDesign:PackIcon Kind="NoteText" 
+                                         Foreground="Black"
+                                         Height="40" 
+                                         Width="30" 
+                                         Margin="15 0 0 0">
+                </materialDesign:PackIcon>
+
+                <TextBlock Name="tblPageName"                                         
+                           Foreground="Black"
+                           Text="Notes"
+                           FontSize="20"
+                           Height="40"
+                           HorizontalAlignment="Stretch"
+                           TextTrimming="CharacterEllipsis"
+                           Margin="55 0 0 0"
+                           Padding="5 10 0 0"
+                           TextWrapping="Wrap">
+                </TextBlock>
+            </Grid>
+
+            <DockPanel Name="dpNoteToolbar"
+                       DockPanel.Dock="Top"
+                       HorizontalAlignment="Stretch"
+                       VerticalAlignment="Top"
+                       Height="30">
+                <TextBlock Name="tblNotesCount"
+                           DockPanel.Dock="Left" 
+                           Padding="5 10 0 0"
+                           Text="{Binding NotesCount, StringFormat={}{0} notes}"
+                           Foreground="DarkGray"
+                           TextWrapping="Wrap">
+                </TextBlock>
+
+                <Button Name="btnDeleteNote" 
+                        Width="25"
+                        Height="25"
+                        DockPanel.Dock="Right"
+                        Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}"
+                        Content="{materialDesign:PackIcon Kind=Delete}"
+                        ToolTip="Delete selected note"
+                        BorderThickness="0 0 0 0" 
+                        Background="#FFE9E9E9"
+                        Foreground="DarkGray"
+                        Padding="-1 -1 -1 -1"
+                        Command="{Binding DeleteSelectedNoteCmd}"
+                        CommandParameter="{Binding ElementName=lvNotes, Path=SelectedItem}">
+                </Button>
+
+                <Button Name="btnCreateNote"
+                        Width="25"
+                        Height="25"
+                        DockPanel.Dock="Right"
+                        Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}"
+                        Content="{materialDesign:PackIcon Kind=NotePlus}"
+                        ToolTip="Add new note"
+                        BorderThickness="0 0 0 0" 
+                        Background="#FFE9E9E9"
+                        Foreground="DarkGray"
+                        Padding="-1 -1 -1 -1"
+                        Command="{Binding CreateNewNoteCmd}">
+                </Button>
+
+                <TextBlock Name="tblSeperate" Width="5" DockPanel.Dock="Right"></TextBlock>
+                <materialDesign:PopupBox Name="pubNotesSort" 
+                                         HorizontalAlignment="Right" 
+                                         DockPanel.Dock="Right"
+                                         IsEnabled="True"
+                                         StaysOpen="True">
+                    <materialDesign:PopupBox.ToggleContent>
+                        <materialDesign:PackIcon Kind="Sort" Foreground="DarkGray"></materialDesign:PackIcon>
+                    </materialDesign:PopupBox.ToggleContent>
+
+                    <StackPanel Name="spSort"
+                          Width="150"
+                          Height="Auto"
+                          Background="White">
+                        <StackPanel.Resources>
+                            <Style TargetType="materialDesign:PackIcon" 
+                                           x:Key="sortIcoStyle1">
+                                <Setter Property="Foreground" 
+                                                    Value="Black">
+                                </Setter>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Path=Tag, RelativeSource={RelativeSource Self}}" 
+                                                         Value="false">
+                                        <Setter Property="Foreground" 
+                                                            Value="LightGray">
+                                        </Setter>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+
+                            <Style TargetType="materialDesign:PackIcon" 
+                                           x:Key="sortIcoStyle2">
+                                <Setter Property="Foreground" 
+                                                    Value="LightGray">
+                                </Setter>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Path=Tag, RelativeSource={RelativeSource Self}}" 
+                                                         Value="false">
+                                        <Setter Property="Foreground" 
+                                                            Value="Black">
+                                        </Setter>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </StackPanel.Resources>
+
+                        <TextBlock Name="tblSearch" 
+                                   Text="SEARCH"
+                                   HorizontalAlignment="Left"
+                                   Margin="15 10 0 0"
+                                   Padding="0 0 0 5"
+                                   Foreground="LightGray">
+                        </TextBlock>
+
+                        <TextBox Name="tbSearch"
+                                 Text="{Binding SearchBoxContent, UpdateSourceTrigger=PropertyChanged}"
+                                 materialDesign:HintAssist.Hint="Title"
+                                 materialDesign:HintAssist.Foreground="Gray"
+                                 Foreground="Black"
+                                 Margin="15 5">
+                        </TextBox>
+
+                        <TextBlock Name="tblSortBy" 
+                                   Text="SORT BY"
+                                   HorizontalAlignment="Left"
+                                   Margin="15 10 0 0"
+                                   Padding="0 0 0 5"
+                                   Foreground="LightGray">
+                        </TextBlock>
+
+                        <Button Name="btnTitleSort" Height="30"
+                                Foreground="Black"
+                                Focusable="False"
+                                Command="{Binding SortByTitleCmd}"
+                                CommandParameter="{Binding ElementName=lvNotes}">
+                            <StackPanel Orientation="Horizontal" 
+                                        HorizontalAlignment="Stretch" 
+                                        VerticalAlignment="Stretch">
+                                <materialDesign:PackIcon Kind="ArrowDownThin"
+                                                         Style="{StaticResource sortIcoStyle1}"
+                                                         Tag="{Binding IsTitleSorted}"
+                                                         Margin="-5 0 -2 0">
+                                </materialDesign:PackIcon>
+                                <materialDesign:PackIcon Kind="ArrowUpThin"
+                                                         Style="{StaticResource sortIcoStyle2}"
+                                                         Tag="{Binding IsTitleSorted}"
+                                                         Margin="-5 0 -5 0">
+                                </materialDesign:PackIcon>
+                                <TextBlock Margin="20 0 0 5">
+                                    <Bold>Title</Bold>
+                                </TextBlock>
+                            </StackPanel>
+                        </Button>
+
+                        <Button Name="btnCreatedDateSort" Height="30"
+                                Foreground="Black"
+                                Command="{Binding SortByCreatedDateCmd}"
+                                CommandParameter="{Binding ElementName=lvNotes}">
+                            <StackPanel Orientation="Horizontal" 
+                                        HorizontalAlignment="Stretch" 
+                                        VerticalAlignment="Stretch">
+                                <materialDesign:PackIcon Kind="ArrowDownThin"
+                                                         Style="{StaticResource sortIcoStyle1}"
+                                                         Tag="{Binding IsCreatedDateSorted}"
+                                                         Margin="-5 0 -2 0">
+                                </materialDesign:PackIcon>
+                                <materialDesign:PackIcon Kind="ArrowUpThin"
+                                                         Style="{StaticResource sortIcoStyle2}"
+                                                         Tag="{Binding IsCreatedDateSorted}"
+                                                         Margin="-5 0 -5 0">
+                                </materialDesign:PackIcon>
+                                <TextBlock Margin="20 0 0 5">
+                                    <Bold>Date Created</Bold>
+                                </TextBlock>
+                            </StackPanel>
+                        </Button>
+
+                        <Button Name="btnLastUpdatedDateSort" Height="30"
+                                Foreground="Black"        
+                                Command="{Binding SortByLastUpdatedDateCmd}"
+                                CommandParameter="{Binding ElementName=lvNotes}">
+                            <StackPanel Orientation="Horizontal" 
+                                        HorizontalAlignment="Stretch" 
+                                        VerticalAlignment="Stretch">
+                                <materialDesign:PackIcon Kind="ArrowDownThin"
+                                                         Style="{StaticResource sortIcoStyle1}"
+                                                         Tag="{Binding IsLastUpdatedDateSorted}"
+                                                         Margin="-5 0 -2 0">
+                                </materialDesign:PackIcon>
+                                <materialDesign:PackIcon Kind="ArrowUpThin"
+                                                         Style="{StaticResource sortIcoStyle2}"
+                                                         Tag="{Binding IsLastUpdatedDateSorted}"
+                                                         Margin="-5 0 -5 0">
+                                </materialDesign:PackIcon>
+                                <TextBlock Margin="20 0 0 5">
+                                    <Bold>Date Updated</Bold>
+                                </TextBlock>
+                            </StackPanel>
+                        </Button>
+                    </StackPanel>
+                </materialDesign:PopupBox>
+            </DockPanel>
+
+            <ListView Name="lvNotes"
+                      DockPanel.Dock="Top"
+                      HorizontalAlignment="Stretch" 
+                      Foreground="Black"
+                      VerticalAlignment="Stretch"
+                      ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                      ItemsSource="{Binding AllNotes}"
+                      SelectedItem="{Binding SelectedNote, Mode=TwoWay}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <DockPanel Name="dpNote" 
+                                   VerticalAlignment="Stretch" 
+                                   HorizontalAlignment="Center">
+                            <TextBlock Name="tblNoteTitle" DockPanel.Dock="Top">
+                                <Bold>
+                                    <Run Text="{Binding Title}"/>
+                                </Bold>
+                            </TextBlock>
+
+                            <TextBlock Name="tblNoteDetail"
+                                       Text="{Binding Description}" 
+                                       Width="Auto" Height="50"
+                                       MaxWidth="236"
+                                       Padding="0 5 0 0"
+                                       DockPanel.Dock="Top" 
+                                       TextWrapping="WrapWithOverflow" 
+                                       TextTrimming="CharacterEllipsis">
+                            </TextBlock>
+
+                            <TextBlock Text="{Binding CreatedDate}" DockPanel.Dock="Bottom"></TextBlock>
+                        </DockPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </DockPanel>
+
+        <GridSplitter Name="gridSplitter" Grid.Column="1" HorizontalAlignment="Stretch"/>
+
+        <DockPanel Name="spNoteContent"
+                    Grid.Column="2"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch">
+            <Grid Name="grdFormatToolbar"
+                  DockPanel.Dock="Top"
+                  Height="150">
+                <Button Name="btnNoteSave"
+                        Width="45"
+                        Height="30"
+                        Style="{StaticResource MaterialDesignFlatSecondaryLightBgButton}"
+                        Content="{materialDesign:PackIcon Kind=NoteEdit}"
+                        Padding="-1 -1 -1 -1"
+                        Margin="0 5 5 0"
+                        BorderThickness="0"
+                        ToolTip="Save"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Top" 
+                        Background="#FF00A82D" 
+                        Foreground="WhiteSmoke"
+                        Command="{Binding SaveSelectedNoteCmd}"
+                        CommandParameter="{Binding SelectedNote, UpdateSourceTrigger=PropertyChanged}" BorderBrush="{x:Null}">
+                </Button>
+
+                <TextBlock Name="tblLastUpdatedDate"
+                           HorizontalAlignment="Stretch"
+                           VerticalAlignment="Bottom"
+                           Margin="0 0 0 75"
+                           Padding="15 0"
+                           Text="{Binding SelectedNote.LastUpdatedDate, 
+                                      StringFormat={}Last updated on: {0}}"
+                           Foreground="DarkGray">
+                </TextBlock>
+
+                <ToolBarTray Name="tbaRTBToolbarArray"
+                             Margin="0,50,0,0"
+                             Height="30"
+                             Background="#FFFAFAFA"
+                             HorizontalAlignment="Stretch">
+                    <ToolBar Name="tbRTBToolbar"
+                             Height="30"
+                             Background="#FFFAFAFA"
+                             IsEnabled="{Binding ElementName=rtbDescription, Path=IsFocused}"
+                             Style="{StaticResource MaterialDesignToolBar}"
+                             HorizontalAlignment="Stretch">
+                        <ToolBar.Resources>
+                            <Style TargetType="Button"
+                                   x:Key="tbButtonStyle">
+                                <Setter Property="Width" Value="30"></Setter>
+                                <Setter Property="Height" Value="30"></Setter>
+                                <Setter Property="Padding" Value="2 2 2 2"></Setter>
+                                <Setter Property="Background" Value="#FFFAFAFA"></Setter>
+                            </Style>
+                        </ToolBar.Resources>
+
+                        <Button Name="btnInsertPicture"
+                                Width="60"
+                                Padding="-1 -1 -1 -1"
+                                Command="{Binding InsertPictureCmd}"
+                                CommandParameter="{Binding ElementName=rtbDescription}">
+                            <StackPanel Orientation="Horizontal" 
+                                        HorizontalAlignment="Stretch"
+                                        Focusable="False"
+                                        IsHitTestVisible="False">
+                                <materialDesign:PackIcon Kind="PlusCircle" 
+                                                         VerticalAlignment="Center"
+                                                         Foreground="#FF0081C2">
+                                </materialDesign:PackIcon>
+                                <TextBlock VerticalAlignment="Center"
+                                           Foreground="Black"
+                                           Margin="2 0">
+                                    <Bold>Insert</Bold>
+                                </TextBlock>
+                            </StackPanel>
+                        </Button>
+
+                        <Separator Height="30" Foreground="DarkGray" BorderThickness="1" VerticalAlignment="Center"/>
+
+                        <Button Name="btnBold"
+                                Style="{StaticResource tbButtonStyle}"
+                                Command="EditingCommands.ToggleBold"
+                                ToolTip="Bold"
+                                Content="{materialDesign:PackIcon Kind=FormatBold, Size=15}">
+                        </Button>
+
+                        <Button Name="btnItalic"                                
+                                Style="{StaticResource tbButtonStyle}"
+                                Command="EditingCommands.ToggleItalic"
+                                ToolTip="Italic"
+                                Content="{materialDesign:PackIcon Kind=FormatItalic, Size=15}">
+                        </Button>
+
+                        <Button Name="btnUnderline"                                
+                                Style="{StaticResource tbButtonStyle}"
+                                Command="EditingCommands.ToggleUnderline"
+                                ToolTip="Underline"
+                                Content="{materialDesign:PackIcon Kind=FormatUnderline, Size=15}">
+                        </Button>
+
+                        <!-- when badging in a toolbar, make sure the parent ToolBar.ClipToBounds="False", and
+                   manually apply the button style -->
+                        
+                        <Separator Height="30" Foreground="DarkGray" BorderThickness="1" VerticalAlignment="Center"/>
+
+                        <ComboBox Name="cbbFontSize"
+                                  Foreground="Black"
+                                  SelectedIndex="4"
+                                  ItemsSource="{Binding _fontSizes}"
+                                  SelectedValue="{Binding _selectedFontSize, Mode=OneWayToSource}"
+                                  MinWidth="40"
+                                  ToolTip="Font Size">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="SelectionChanged">
+                                    <i:InvokeCommandAction Command="{Binding EditSelectedTextSizeCmd}"
+                                                           CommandParameter="{Binding ElementName=rtbDescription}">
+                                    </i:InvokeCommandAction>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                       </ComboBox>
+
+                        <ComboBox Name="cbbFonts"
+                                  MinWidth="100"
+                                  Foreground="Black"
+                                  SelectedIndex="0"
+                                  SelectedItem="{Binding _selectedFontFamily, Mode=OneWayToSource}"
+                                  ItemsSource="{x:Static Fonts.SystemFontFamilies}"
+                                  ToolTip="Font">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="SelectionChanged">
+                                    <i:InvokeCommandAction Command="{Binding EditSelectedTextFontFamilyCmd}"
+                                                           CommandParameter="{Binding ElementName=rtbDescription}">
+                                    </i:InvokeCommandAction>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </ComboBox>
+
+                        <Separator Height="30" Foreground="DarkGray" BorderThickness="1" VerticalAlignment="Center"/>
+
+                        <Button Name="btnAlignLeft"                                
+                                Style="{StaticResource tbButtonStyle}"
+                                ToolTip="Left"
+                                Command="EditingCommands.AlignLeft"
+                                Content="{materialDesign:PackIcon Kind=FormatAlignLeft, Size=15}">
+                        </Button>
+
+                        <Button Name="btnAlignCenter"                                
+                                Style="{StaticResource tbButtonStyle}"
+                                ToolTip="Center"
+                                Command="EditingCommands.AlignCenter"
+                                Content="{materialDesign:PackIcon Kind=FormatAlignCenter, Size=15}">
+                        </Button>
+
+                        <Button Name="btnAlignRight"                                
+                                Style="{StaticResource tbButtonStyle}"
+                                ToolTip="Right"
+                                Command="EditingCommands.AlignRight"
+                                Content="{materialDesign:PackIcon Kind=FormatAlignRight, Size=15}">
+                        </Button>
+
+                        <Button Name="btnAlignJustify"
+                                Style="{StaticResource tbButtonStyle}"
+                                ToolTip="Justify"
+                                Command="EditingCommands.AlignJustify"
+                                Content="{materialDesign:PackIcon Kind=FormatAlignJustify, Size=15}">
+                        </Button>
+
+                        <Separator Height="30" Padding="0 2 -2 0" Foreground="DarkGray" BorderThickness="1" VerticalAlignment="Center"/>
+
+                        <Button Name="btnCut"
+                                Style="{StaticResource tbButtonStyle}"
+                                Command="Cut"
+                                ToolTip="Cut"
+                                Content="{materialDesign:PackIcon Kind=ContentCut, Size=15}">
+                        </Button>
+
+                        <Button Name="btnCopy"
+                                Style="{StaticResource tbButtonStyle}"
+                                Command="Copy"
+                                ToolTip="Copy"                            
+                                Content="{materialDesign:PackIcon Kind=ContentCopy, Size=15}">
+                        </Button>
+
+                        <Button Name="btnPaste"
+                                Style="{StaticResource tbButtonStyle}"
+                                Command="Paste"
+                                ToolTip="Paste"
+                                Content="{materialDesign:PackIcon Kind=ContentPaste, Size=15}" />
+                    </ToolBar>
+                </ToolBarTray>
+            </Grid>
+
+            <Line DockPanel.Dock="Top" Stroke="Black" StrokeThickness="2"></Line>
+
+            <TextBox Name="tbEditedTitle"
+                     Text="{Binding SelectedNote.Title, UpdateSourceTrigger=PropertyChanged}"
+                     DockPanel.Dock="Top"
+                     Padding="15 10 0 5"
+                     FontWeight="Bold"
+                     Foreground="Black"
+                     FontSize="15"
+                     BorderThickness="0">
+            </TextBox>
+
+            <RichTextBox Name="rtbDescription"
+                         Foreground="Black"
+                         AllowDrop="True"
+                         Padding="15 15"
+                         VerticalScrollBarVisibility="Auto"
+                         HorizontalScrollBarVisibility="Auto"
+                         dtContext:RichTextboxHelper.DocumentXaml="{Binding SelectedNote.XamlFormat, UpdateSourceTrigger=PropertyChanged}">
+            </RichTextBox>
+        </DockPanel>
+    </Grid>
+</Page>

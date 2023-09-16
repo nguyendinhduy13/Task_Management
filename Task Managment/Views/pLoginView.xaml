@@ -1,0 +1,139 @@
+﻿<Page x:Class="Task_Managment.Views.pLoginView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Task_Managment.Views"
+      mc:Ignorable="d"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+      TextElement.FontWeight="Regular"
+      TextElement.FontSize="13"
+      TextOptions.TextFormattingMode="Ideal"
+      TextOptions.TextRenderingMode="Auto"
+      Background="White"
+      FontFamily="{DynamicResource MaterialDesignFont}"
+      d:DesignHeight="450" d:DesignWidth="500"
+      Title="pLoginView">
+    <Grid>
+        <DockPanel HorizontalAlignment="Center"
+                   VerticalAlignment="Center"
+                   Width="250">
+            <TextBlock
+                Name="tblLoginText"
+                DockPanel.Dock="Top"
+                FontSize="30"
+                FontFamily="Arial"
+                Margin="0 40 0 0"
+                Foreground="Black"
+                HorizontalAlignment="Center">
+                <Bold>Sign In</Bold>
+            </TextBlock>
+
+            <TextBox
+                Name="tbEmail"
+                DockPanel.Dock="Top"
+                Foreground="Black"
+                Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                Margin="0 20 0 0"
+                BorderBrush="DarkBlue"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Top"
+                Width="250"
+                TextWrapping="Wrap"
+                materialDesign:TextFieldAssist.CharacterCounterVisibility="{Binding Path=IsChecked, ElementName=MaterialDesignOutlinedTextBoxTextCountComboBox, Converter={StaticResource BooleanToVisibilityConverter}}"
+                VerticalScrollBarVisibility="Auto"
+                materialDesign:HintAssist.Hint="Email">
+            </TextBox>
+
+            <PasswordBox
+                DockPanel.Dock="Top"
+                Margin="0 20 0 0"
+                Style="{StaticResource MaterialDesignOutlinedPasswordBox}"
+                BorderBrush="DarkBlue"
+                HorizontalAlignment="Center"
+                Width="250"
+                IsEnabled="{Binding Path=IsChecked, ElementName=MaterialDesignOutlinedPasswordBoxEnabledComboBox}"
+                materialDesign:HintAssist.Hint="Password">
+            </PasswordBox>
+
+            <DockPanel DockPanel.Dock="Top"
+                       Height="auto"
+                       Margin="0 10 0 0">
+                <CheckBox
+                DockPanel.Dock="Left"
+                Name="ckbRememberMe"
+                Content="Remember me"
+                Foreground="Black"
+                HorizontalAlignment="Left">
+                </CheckBox>
+
+                <Button
+                Name="btnForgotPassword"
+                DockPanel.Dock="Right"
+                Content="Forgot Password?"
+                TextBlock.FontSize="10"
+                TextBlock.FontStyle="Oblique"
+                Padding="0"
+                HorizontalAlignment="Right"
+                Height="20"
+                   Width="90"
+                Background="Transparent"
+                Foreground="Blue"
+                BorderThickness="0">
+                </Button>
+            </DockPanel>
+
+            <Button
+                DockPanel.Dock="Top"
+                Name="btnSignIn"
+                Content="Sign In"
+                BorderThickness="0"
+                Background="#FF00A82D"
+                Width="300"
+                Height="auto"
+                Margin="0 10 0 0"
+                HorizontalAlignment="Center">
+            </Button>
+
+            <Button
+                DockPanel.Dock="Top"
+                Name="btnSignInAsGuest"
+                Content="Sign In as Guest"
+                BorderThickness="0"
+                Background="DarkBlue"
+                Width="300"
+                Margin="0 10"
+                Height="auto"
+                HorizontalAlignment="Center">
+            </Button>
+
+            <StackPanel
+                DockPanel.Dock="Top"
+                Orientation="Horizontal"
+                HorizontalAlignment="Left">
+                <TextBlock
+                    Name="tblNotRegistereddYet"
+                    FontSize="10"
+                    Foreground="Black"
+                    FontFamily="Arial">
+                    <Bold>Not registered yet?</Bold>
+                </TextBlock>
+
+                <Button
+                    Name="btnCreateNewAccount"
+                    Content="Create new Account!"
+                    TextBlock.FontSize="10"
+                    TextBlock.FontStyle="Oblique"
+                    VerticalAlignment="Top"
+                    Margin="6 0"
+                    Padding="-1"
+                    Height="{Binding ElementName=btnCreateNewAccount, Path=FontSize}"
+                    Background="Transparent"
+                    Foreground="Blue"
+                    BorderThickness="0">
+                </Button>
+            </StackPanel>
+        </DockPanel>
+    </Grid>
+</Page>

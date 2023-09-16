@@ -1,0 +1,492 @@
+﻿<Page x:Class="Task_Managment.Views.pNotebookHomeView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:local="clr-namespace:Task_Managment.Views"
+      xmlns:dtContext="clr-namespace:Task_Managment.ViewModels"
+      xmlns:y="clr-namespace:Task_Managment.Converters"
+      mc:Ignorable="d"
+      d:DesignHeight="900"
+      d:DesignWidth="1600"
+      Title="pNotebookHomeView"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns:behaviors="http://schemas.microsoft.com/xaml/behaviors"
+      TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+      TextElement.FontWeight="Regular"
+      TextElement.FontSize="13"
+      TextOptions.TextFormattingMode="Ideal"
+      TextOptions.TextRenderingMode="Auto"
+      Background="White"
+      DataContext="{StaticResource NoteBookVM}"
+      FontFamily="{DynamicResource MaterialDesignFont}">
+
+    <Page.Resources>
+        <ControlTemplate x:Key="SelectedTemplate"
+                         TargetType="ListViewItem">
+            <Border CornerRadius="5"
+                    BorderThickness="1"
+                    BorderBrush="DarkGray"
+                    Background="#FF92C6F9"
+                    Padding="2"
+                    HorizontalAlignment="Left"
+                    Margin="5"
+                    Tag="{Binding Value}"
+                    Cursor="Hand"
+                    >
+                <TextBlock Text="{Binding Name}"
+                           Margin="5" />
+            </Border>
+        </ControlTemplate>
+        <Style TargetType="ListViewItem">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ListViewItem">
+                        <Border CornerRadius="5"
+                                BorderThickness="1"
+                                BorderBrush="DarkGray"
+                                Background="WhiteSmoke"
+                                Padding="2"
+                                HorizontalAlignment="Left"
+                                Margin="5"
+                                Tag="{Binding Value}"
+                                Cursor="Hand"
+                                >
+                            <TextBlock Text="{Binding Name}"
+                                       Margin="5" />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <MultiTrigger>
+                    <MultiTrigger.Conditions>
+                        <Condition Property="IsSelected"
+                                   Value="true" />
+                        <Condition Property="Selector.IsSelectionActive"
+                                   Value="true" />
+                    </MultiTrigger.Conditions>
+                    <Setter Property="Template"
+                            Value="{StaticResource SelectedTemplate}" />
+                </MultiTrigger>
+            </Style.Triggers>
+        </Style>
+    </Page.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="130" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <Grid Name="grdPageToolbar"
+              Grid.Row="0">
+            <materialDesign:PackIcon Kind="Notebook"
+                                     Width="30"
+                                     Height="30"
+                                     Foreground="Black"
+                                     HorizontalAlignment="Left"
+                                     VerticalAlignment="Top"
+                                     Margin="10 20" />
+
+            <TextBlock Name="tblPageTitle"
+                       Text="Notebooks"
+                       FontSize="20"
+                       Height="{Binding ElementName=tblPageTitle, Path=FontSize}"
+                       Foreground="Black"
+                       HorizontalAlignment="Left"
+                       VerticalAlignment="Top"
+                       Margin="45 25 0 0">
+            </TextBlock>
+
+            <Border Name="bdSearch"
+                    Width="190"
+                    Height="25"
+                    BorderBrush="DarkBlue"
+                    BorderThickness="1"
+                    CornerRadius="3"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Top"
+                    Margin="0 20 15 0">
+                <StackPanel Name="spSearch"
+                            VerticalAlignment="Stretch"
+                            HorizontalAlignment="Stretch"
+                            Orientation="Horizontal">
+                    <TextBox Name="tbSearch"
+                             materialDesign:HintAssist.Hint="Find Notebooks..."
+                             materialDesign:HintAssist.Foreground="Black"
+                             materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
+                             BorderThickness="0"
+                             FontSize="13"
+                             Foreground="Black"
+                             Padding="-2"
+                             Width="150"
+                             Text="{Binding SearchBoxContent, UpdateSourceTrigger=PropertyChanged}"
+                             Margin="10 0 0 0"
+                             Height="15"
+                             HorizontalAlignment="Left"
+                             VerticalAlignment="Center"
+                             TextWrapping="Wrap">
+                        <behaviors:Interaction.Triggers>
+                            <behaviors:EventTrigger EventName="TextChanged">
+                                <behaviors:InvokeCommandAction 
+                                    Command="{Binding FilterNotebooksCmd}" 
+                                    CommandParameter="{Binding ElementName=lvNotebooks}">
+                                </behaviors:InvokeCommandAction>
+                            </behaviors:EventTrigger>
+                        </behaviors:Interaction.Triggers>
+                    </TextBox>
+                    <materialDesign:PackIcon Kind="Magnify"
+                                             Foreground="DarkGray"
+                                             Padding="-1"
+                                             Margin="5 0 0 0"
+                                             HorizontalAlignment="Left"
+                                             VerticalAlignment="Center">
+                    </materialDesign:PackIcon>
+                </StackPanel>
+            </Border>
+
+            <TextBlock Name="tblNotebooksCount"
+                       Text="Your Notebooks"
+                       FontSize="18"
+                       Height="{Binding ElementName=tblPageTitle, Path=FontSize}"
+                       Foreground="Black"
+                       HorizontalAlignment="Left"
+                       VerticalAlignment="Bottom"
+                       Margin="15 0 0 10">
+            </TextBlock>
+
+            <materialDesign:PopupBox Name="pubNotesSort"
+                                     Width="30"
+                                     Height="30"
+                                     HorizontalAlignment="Right"
+                                     VerticalAlignment="Bottom"
+                                     IsEnabled="True"
+                                     Margin="0 0 15 5">
+                <materialDesign:PopupBox.ToggleContent>
+                    <materialDesign:PackIcon Kind="Sort"
+                                             Foreground="DarkGray"
+                                             Width="20"
+                                             Height="20"
+                                             HorizontalAlignment="Center"
+                                             VerticalAlignment="Center">
+                    </materialDesign:PackIcon>
+                </materialDesign:PopupBox.ToggleContent>
+
+                <StackPanel Name="spSort"
+                            Width="150"
+                            Height="Auto"
+                            Background="White">
+                    <StackPanel.Resources>
+                        <Style TargetType="materialDesign:PackIcon"
+                               x:Key="sortIcoStyle1">
+                            <Setter Property="Foreground"
+                                    Value="Black">
+                            </Setter>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Path=Tag, RelativeSource={RelativeSource Self}}"
+                                             Value="false">
+                                    <Setter Property="Foreground"
+                                            Value="LightGray">
+                                    </Setter>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+
+                        <Style TargetType="materialDesign:PackIcon"
+                               x:Key="sortIcoStyle2">
+                            <Setter Property="Foreground"
+                                    Value="LightGray">
+                            </Setter>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Path=Tag, RelativeSource={RelativeSource Self}}"
+                                             Value="false">
+                                    <Setter Property="Foreground"
+                                            Value="Black">
+                                    </Setter>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </StackPanel.Resources>
+
+                    <TextBlock Name="tblSortBy"
+                               Text="SORT BY"
+                               HorizontalAlignment="Left"
+                               Margin="15 10 0 0"
+                               Padding="0 0 0 5"
+                               Foreground="LightGray">
+                    </TextBlock>
+
+                    <Button Name="btnTitleSort"
+                            Height="30"
+                            Foreground="Black"
+                            Command="{Binding SortByTitleCmd}"
+                            CommandParameter="{Binding ElementName=lvNotebooks}">
+                        <StackPanel Orientation="Horizontal"
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Stretch">
+                            <materialDesign:PackIcon Kind="ArrowDownThin"
+                                                     Style="{StaticResource sortIcoStyle1}"
+                                                     Tag="{Binding IsTitleSorted}"
+                                                     Margin="-5 0 -2 0">
+                            </materialDesign:PackIcon>
+                            <materialDesign:PackIcon Kind="ArrowUpThin"
+                                                     Style="{StaticResource sortIcoStyle2}"
+                                                     Tag="{Binding IsTitleSorted}"
+                                                     Margin="-5 0 -5 0">
+                            </materialDesign:PackIcon>
+                            <TextBlock Margin="20 0 0 5">
+                                    <Bold>Title</Bold>
+                            </TextBlock>
+                        </StackPanel>
+                    </Button>
+
+                    <Button Name="btnCreatedDateSort"
+                            Height="30"
+                            Foreground="Black"
+                            Command="{Binding SortByCreatedDateCmd}"
+                            CommandParameter="{Binding ElementName=lvNotebooks}">
+                        <StackPanel Orientation="Horizontal"
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Stretch">
+                            <materialDesign:PackIcon Kind="ArrowDownThin"
+                                                     Style="{StaticResource sortIcoStyle1}"
+                                                     Tag="{Binding IsCreatedDateSorted}"
+                                                     Margin="-5 0 -2 0">
+                            </materialDesign:PackIcon>
+                            <materialDesign:PackIcon Kind="ArrowUpThin"
+                                                     Style="{StaticResource sortIcoStyle2}"
+                                                     Tag="{Binding IsCreatedDateSorted}"
+                                                     Margin="-5 0 -5 0">
+                            </materialDesign:PackIcon>
+                            <TextBlock Margin="20 0 0 5">
+                                    <Bold>Date Created</Bold>
+                            </TextBlock>
+                        </StackPanel>
+                    </Button>
+
+                    <Button Name="btnLastUpdatedDateSort"
+                            Height="30"
+                            Foreground="Black"
+                            Command="{Binding SortByLastUpdatedDateCmd}"
+                            CommandParameter="{Binding ElementName=lvNotebooks}">
+                        <StackPanel Orientation="Horizontal"
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Stretch">
+                            <materialDesign:PackIcon Kind="ArrowDownThin"
+                                                     Style="{StaticResource sortIcoStyle1}"
+                                                     Tag="{Binding IsLastUpdatedDateSorted}"
+                                                     Margin="-5 0 -2 0">
+                            </materialDesign:PackIcon>
+                            <materialDesign:PackIcon Kind="ArrowUpThin"
+                                                     Style="{StaticResource sortIcoStyle2}"
+                                                     Tag="{Binding IsLastUpdatedDateSorted}"
+                                                     Margin="-5 0 -5 0">
+                            </materialDesign:PackIcon>
+                            <TextBlock Margin="20 0 0 5">
+                                    <Bold>Date Updated</Bold>
+                            </TextBlock>
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
+            </materialDesign:PopupBox>
+
+            <Button Name="btnCreateNotebook"
+                    Width="155"
+                    Padding="-2"
+                    BorderThickness="0"
+                    BorderBrush="Transparent"
+                    Background="Transparent"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Bottom"
+                    Margin="50 3"
+                    Command="{Binding CreateNewNoteBookCommand}">
+                <StackPanel Orientation="Horizontal">
+                    <materialDesign:PackIcon Kind="NotebookPlus"
+                                             Foreground="#FF00A82D"
+                                             Width="20"
+                                             Height="20">
+                    </materialDesign:PackIcon>
+                    <TextBlock Text="New Notebook"
+                               Padding="0 2"
+                               FontSize="16"
+                               Margin="3 0"
+                               Foreground="#FF00A82D">
+                    </TextBlock>
+                </StackPanel>
+            </Button>
+
+            <Separator Background="DarkGreen"
+                       Margin="15 0 15 0"
+                       VerticalAlignment="Bottom">
+                <Separator.RenderTransform>
+                    <ScaleTransform ScaleY="2" />
+                </Separator.RenderTransform>
+            </Separator>
+        </Grid>
+
+        <Grid Name="grdContent"
+              Grid.Row="1">
+
+            <ListView ItemsSource="{Binding AllNotebooks}"
+                      Name="lvNotebooks"
+                      Margin="15 3 15 15"
+                      SelectedItem="{Binding SelectedNotebook, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                      ItemContainerStyle="{DynamicResource FileItemStyle}"
+                      ScrollViewer.HorizontalScrollBarVisibility="Hidden">
+
+           
+                
+                <ListView.View>
+                    <GridView>
+                        <GridView.ColumnHeaderContainerStyle>
+                            <Style TargetType="GridViewColumnHeader">
+                                <Setter Property="HorizontalAlignment"
+                                        Value="Left"></Setter>
+                                <Setter Property="Foreground"
+                                        Value="Gray"></Setter>
+                                <Setter Property="Background"
+                                        Value="#F1F1F1"></Setter>
+                                <Setter Property="Width"
+                                        Value="Auto"></Setter>
+                                <Setter Property="IsEnabled"
+                                        Value="False"></Setter>
+                                <Setter Property="BorderThickness"
+                                        Value="10"></Setter>
+                                <Setter Property="FontStyle"
+                                        Value="Normal"></Setter>
+                                <Setter Property="FontSize"
+                                        Value="20"></Setter>
+                                <Setter Property="BorderBrush"
+                                        Value="Transparent"></Setter>
+
+
+
+                            </Style>
+                        </GridView.ColumnHeaderContainerStyle>
+                        <GridViewColumn Header="TITLE                                                                                                               "
+                                        Width="500"
+                                        HeaderContainerStyle="{DynamicResource GridViewColumnHeader}"
+                                        >
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Border Width="500" >
+                                        <TextBox
+                                            Name="tbNotebookTitle"
+                                            HorizontalAlignment="Left"
+                                            Text="{Binding _name, UpdateSourceTrigger=PropertyChanged}"
+                                            Background="#00F1F1F1"
+                                            FontSize="18"
+                                            Foreground="Black">
+                                        <behaviors:Interaction.Triggers>
+                                            <behaviors:EventTrigger EventName="MouseUp">
+                                                <behaviors:InvokeCommandAction Command="{Binding Source={StaticResource NoteBookVM}, Path=NoteSwichCommand}"
+                                                                               CommandParameter="{Binding   RelativeSource={ RelativeSource Mode=FindAncestor, AncestorType={x:Type ListViewItem}}}" />
+                                            </behaviors:EventTrigger>
+                                        </behaviors:Interaction.Triggers>
+                                        </TextBox>
+                                    </Border>
+
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+
+                        </GridViewColumn>
+                        <GridViewColumn Header="CREATED                                                                                                                     "
+                                        Width="450"
+                                        HeaderContainerStyle="{DynamicResource GridViewColumnHeader}">
+
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding _createdDate}"
+                                               HorizontalAlignment="Left"
+                                               Margin="0 5 0 0"
+                                               Foreground="Black"
+                                               FontSize="18">
+                                    </TextBlock>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+
+                        </GridViewColumn>
+                        <GridViewColumn Header="UPDATED                                                                                                            "
+                                        Width="450"
+                                        HeaderContainerStyle="{DynamicResource GridViewColumnHeader}">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding _lastUpdateDate}"
+                                               HorizontalAlignment="Left"
+                                               Margin="0 5 0 0"
+                                               Foreground="Black"
+                                               FontSize="18">
+                                         <behaviors:Interaction.Triggers>
+                                            <behaviors:EventTrigger EventName="MouseUp">
+                                                <behaviors:InvokeCommandAction Command="{Binding Source={StaticResource NoteBookVM}, Path=NoteSwichCommand}"
+                                                                               CommandParameter="{Binding   RelativeSource={ RelativeSource Mode=FindAncestor, AncestorType={x:Type ListViewItem}}}" />
+                                            </behaviors:EventTrigger>
+                                        </behaviors:Interaction.Triggers>
+                                    </TextBlock>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="ACTIONS"
+                                        Width="Auto"
+                                        HeaderContainerStyle="{DynamicResource GridViewColumnHeader}">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Border Width="500">
+                                        <materialDesign:PopupBox HorizontalAlignment="Left"
+                                                Content="{materialDesign:PackIcon Kind=DotsVertical}"
+                                                BorderBrush="Transparent"
+                                                Background="#00F1F1F1"
+                                                FontSize="18"
+                                                Foreground="Black">
+                                            <StackPanel
+                                                Name="spNotebookActions"
+                                                Width="100"
+                                                Height="auto"
+                                                Background="White">
+                                                <Button
+                                                    Name="btnActionRename"
+                                                    Foreground="Black"
+                                                    Background="White"
+                                                    BorderBrush="Transparent"
+                                                    BorderThickness="0"
+                                                    Content="Rename"
+                                                    Command="{Binding Source={StaticResource NoteBookVM}, Path=RenameNotebookCmd}"
+                                                    CommandParameter="{Binding Source={StaticResource NoteBookVM}, Path=SelectedNotebook}">
+                                                    
+                                                </Button>
+                                                
+                                                <Button
+                                                    Name="btnActionDelete"
+                                                    Foreground="Red"
+                                                    Background="{x:Null}"
+                                                    BorderBrush="Transparent"
+                                                    BorderThickness="0"
+                                                    Content="Delete"
+                                                    Command="{Binding Source={StaticResource NoteBookVM}, Path=DeleteSelectedNoteBookCommand}"
+                                                    CommandParameter="{Binding RelativeSource={ RelativeSource Mode=FindAncestor, AncestorType={x:Type ListViewItem}}}">
+                                                </Button>
+                                            </StackPanel>
+                                        </materialDesign:PopupBox>
+                                        <behaviors:Interaction.Triggers>
+                                            <behaviors:EventTrigger EventName="MouseUp">
+                                                <behaviors:InvokeCommandAction Command="{Binding Source={StaticResource NoteBookVM}, Path=NoteSwichCommand}"
+                                                                               CommandParameter="{Binding   RelativeSource={ RelativeSource Mode=FindAncestor, AncestorType={x:Type ListViewItem}}}" />
+                                            </behaviors:EventTrigger>
+                                        </behaviors:Interaction.Triggers>
+
+                                    </Border>
+
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+
+                    </GridView>
+
+                </ListView.View>
+
+
+            </ListView>
+        </Grid>
+    </Grid>
+</Page>

@@ -1,0 +1,319 @@
+﻿<Window x:Class="Task_Managment.StartWindowViewModels"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Task_Managment"
+        xmlns:y="clr-namespace:Task_Managment.Converters"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" xmlns:wndContext="clr-namespace:Task_Managment.ViewModels"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        mc:Ignorable="d"
+        WindowStyle="None"
+        Icon="/imagesForWpf/appIcon.png"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen"
+        Title="StartWindow" Height="450" Width="700">
+    <Window.DataContext>
+        <wndContext:StartWindowViewModel/>
+    </Window.DataContext>
+
+    <DockPanel>
+        <Grid 
+            Background="White"
+            DockPanel.Dock="Left"
+            Width="440"
+            HorizontalAlignment="Stretch">
+            <DockPanel 
+                Width="300"
+                HorizontalAlignment="Center" 
+                VerticalAlignment="Center">
+                <TextBlock 
+                    Name="tblRegisterText"
+                    DockPanel.Dock="Top"
+                    FontSize="30"
+                    FontFamily="Fonts/Roboto-Weight.ttf #Roboto"
+                    Margin="0 20 0 0"
+                    Foreground="Black"
+                    HorizontalAlignment="Center">
+                    <Bold>Be with us!</Bold>
+                </TextBlock>
+
+                <TextBlock
+                    DockPanel.Dock="Top"
+                    Margin="10 20 10 0"
+                    Padding="10 0"
+                    Text="Email"
+                    Foreground="Black">
+                </TextBlock>
+
+                <TextBox
+                    Name="tbRegisterEmail"
+                    DockPanel.Dock="Top"
+                    Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                    Margin="10 1 10 0"
+                    Text="{Binding mRegisterEmail}"
+                    BorderBrush="DarkBlue"
+                    Background="White"
+                    Foreground="Black"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Top"
+                    MaxLines="1"
+                    Height="35"
+                    Padding="5"
+                    FontSize="12"
+                    VerticalContentAlignment="Center"
+                    HorizontalContentAlignment="Left"
+                    TextWrapping="Wrap"
+                    materialDesign:TextFieldAssist.CharacterCounterVisibility="{Binding Path=IsChecked, ElementName=MaterialDesignOutlinedTextBoxTextCountComboBox, Converter={StaticResource BooleanToVisibilityConverter}}"
+                    VerticalScrollBarVisibility="Auto">
+                </TextBox>
+
+                <TextBlock
+                    DockPanel.Dock="Top"
+                    Margin="10 5 10 0"
+                    Padding="5 0"
+                    Text="Username"
+                    Foreground="Black">
+                </TextBlock>
+
+                <TextBox
+                    Name="tbRegisterUsername"
+                    DockPanel.Dock="Top"
+                    Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                    Margin="10 1 10 0"
+                    Text="{Binding mRegisterUsername}"
+                    BorderBrush="DarkBlue"
+                    Background="White"
+                    Foreground="Black"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Top"
+                    MaxLines="1"
+                    Height="35"
+                    Padding="5"
+                    FontSize="12"
+                    VerticalContentAlignment="Center"
+                    HorizontalContentAlignment="Left"
+                    TextWrapping="Wrap"
+                    materialDesign:TextFieldAssist.CharacterCounterVisibility="{Binding Path=IsChecked, ElementName=MaterialDesignOutlinedTextBoxTextCountComboBox, Converter={StaticResource BooleanToVisibilityConverter}}"
+                    VerticalScrollBarVisibility="Auto">
+                </TextBox>
+
+                <TextBlock
+                    DockPanel.Dock="Top"
+                    Margin="10 5 10 0"
+                    Padding="5 0"
+                    Text="Password"
+                    Foreground="Black">
+                </TextBlock>
+
+                <PasswordBox
+                    Name="pbRegisterPassword"
+                    DockPanel.Dock="Top"
+                    TextBlock.FontSize="20"
+                    Style="{StaticResource MaterialDesignOutlinedPasswordBox}"
+                    BorderBrush="DarkBlue"
+                    Background="White"
+                    Foreground="Black"
+                    Margin="10 1 10 0"
+                    VerticalContentAlignment="Center"
+                    HorizontalContentAlignment="Stretch"
+                    Padding="5"
+                    FontSize="12"
+                    Height="35"
+                    IsEnabled="{Binding Path=IsChecked, ElementName=MaterialDesignOutlinedPasswordBoxEnabledComboBox}">
+                </PasswordBox>
+
+                <TextBlock
+                    DockPanel.Dock="Top"
+                    Margin="10 5 10 0"
+                    Padding="5 0"
+                    Text="Confirm Password"
+                    Foreground="Black">
+                </TextBlock>
+
+                <PasswordBox
+                    Name="pbConfirmPassword"
+                    DockPanel.Dock="Top"
+                    TextBlock.FontSize="20"
+                    Style="{StaticResource MaterialDesignOutlinedPasswordBox}"
+                    BorderBrush="DarkBlue"
+                    Background="White"
+                    Foreground="Black"
+                    Margin="10 1 10 0"
+                    VerticalContentAlignment="Center"
+                    HorizontalContentAlignment="Stretch"
+                    Padding="5"
+                    FontSize="12"
+                    Height="35"
+                    IsEnabled="{Binding Path=IsChecked, ElementName=MaterialDesignOutlinedPasswordBoxEnabledComboBox}">
+                </PasswordBox>
+
+                <Button
+                    DockPanel.Dock="Top"
+                    Name="btnRegister"
+                    Content="Create new Account"
+                    BorderThickness="0"
+                    Background="#FF00A82D"
+                    Height="35"
+                    Margin="0 10 0 0"
+                    HorizontalAlignment="Stretch"
+                    Command="{Binding RegisterNewAccountCmd}">
+                    <Button.Resources>
+                        <y:MultiValueConverter x:Key="btnResouces"/>
+                    </Button.Resources>
+                    <Button.CommandParameter>
+                        <MultiBinding Converter="{StaticResource ResourceKey=btnResouces}">
+                            <Binding ElementName="pbRegisterPassword"></Binding>
+                            <Binding ElementName="pbConfirmPassword"></Binding>
+                        </MultiBinding>
+                    </Button.CommandParameter>
+                </Button>
+            </DockPanel>
+        </Grid>
+
+        <Grid 
+            DockPanel.Dock="Right"
+            Width="250"
+            Background="#282F33"
+            HorizontalAlignment="Right">
+            <DockPanel 
+                HorizontalAlignment="Center" 
+                VerticalAlignment="Center" 
+                Width="200">
+                <TextBlock 
+                    Name="tblLoginText"
+                    DockPanel.Dock="Top"
+                    FontSize="30"
+                    FontFamily="Fonts/Roboto-Weight.ttf #Roboto"
+                    Margin="0 40 0 0"
+                    Foreground="White"
+                    HorizontalAlignment="Center"
+                    Text="Sign In">
+                </TextBlock>
+
+                <TextBlock
+                    DockPanel.Dock="Top"
+                    Margin="0 20 0 0"
+                    Padding="5 0"
+                    Text="Email"
+                    FontSize="10"
+                    FontFamily="Fonts/Roboto-Weight.ttf #Roboto"
+                    Foreground="White">
+                </TextBlock>
+                
+                <TextBox
+                    Name="tbEmail"
+                    DockPanel.Dock="Top"
+                    Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                    Margin="0 1 0 0"
+                    Text="{Binding mLoginEmail}"
+                    BorderBrush="DarkBlue"
+                    Background="White"
+                    Foreground="Black"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Top"
+                    MaxLines="1"
+                    Padding="5"
+                    Height="35"
+                    Width="200"
+                    FontSize="12"
+                    VerticalContentAlignment="Center"
+                    HorizontalContentAlignment="Left"
+                    materialDesign:TextFieldAssist.CharacterCounterVisibility="{Binding Path=IsChecked, ElementName=MaterialDesignOutlinedTextBoxTextCountComboBox, Converter={StaticResource BooleanToVisibilityConverter}}">
+                </TextBox>
+
+                <TextBlock
+                    DockPanel.Dock="Top"
+                    Margin="0 10 0 0"
+                    Padding="5 0"
+                    Text="Password"
+                    FontSize="10"                    
+                    FontFamily="Fonts/Roboto-Weight.ttf #Roboto"  
+                    Foreground="White">
+                </TextBlock>
+
+                <PasswordBox
+                    Name="pbPassword"
+                    DockPanel.Dock="Top"
+                    Margin="0 1 0 0"
+                    TextBlock.FontSize="20"
+                    Style="{StaticResource MaterialDesignOutlinedPasswordBox}"
+                    BorderBrush="DarkBlue"
+                    Background="White"
+                    Foreground="Black"
+                    VerticalContentAlignment="Center"
+                    HorizontalContentAlignment="Left"
+                    Width="200"
+                    Padding="5"
+                    Height="35"
+                    FontSize="12"
+                    IsEnabled="{Binding Path=IsChecked, ElementName=MaterialDesignOutlinedPasswordBoxEnabledComboBox}">
+                </PasswordBox>
+
+                <DockPanel 
+                    DockPanel.Dock="Top"
+                    Height="auto"
+                    Margin="0 10 0 0">
+                    <CheckBox
+                        DockPanel.Dock="Left"
+                        Name="ckbRememberMe"
+                        Content="Remember me"
+                        TextBlock.FontSize="10"
+                        Foreground="White"
+                        HorizontalAlignment="Left"
+                        BorderBrush="Blue" 
+                        IsChecked="{Binding mIsUserRemember, Mode=OneWayToSource}"
+                        BorderThickness="2">
+                    </CheckBox>
+
+                    <Button
+                        Name="btnForgotPassword"
+                        DockPanel.Dock="Right"
+                        Content="Forgot Password?"
+                        TextBlock.FontSize="10"
+                        TextBlock.FontStyle="Oblique"
+                        Padding="0 0 0 3"
+                        HorizontalAlignment="Right"
+                        VerticalContentAlignment="Bottom"
+                        Height="20"
+                        Width="90"
+                        Background="Transparent"
+                        Command="{Binding ResetPasswordCmd}"
+                        Foreground="Blue"
+                        BorderThickness="0">
+                    </Button>
+                </DockPanel>
+
+                <Button
+                    DockPanel.Dock="Top"
+                    Name="btnSignIn"
+                    Content="Sign In"
+                    BorderThickness="0"
+                    Background="#FF00A82D"
+                    Width="250"
+                    Height="auto"
+                    Margin="0 10 0 0"
+                    HorizontalAlignment="Center"
+                    Command="{Binding LoginAsUserCmd}"
+                    CommandParameter="{Binding ElementName=pbPassword}">
+                </Button>
+
+                <Button
+                    DockPanel.Dock="Top"
+                    Name="btnSignInAsGuest"
+                    Content="Sign In as Guest"
+                    BorderThickness="0"
+                    Background="DarkBlue"
+                    Command="{Binding LoginAsGuestCmd}"
+                    Margin="0 10"
+                    Height="32">
+                </Button>
+            </DockPanel>
+        </Grid>
+    </DockPanel>
+</Window>

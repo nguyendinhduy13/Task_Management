@@ -1,0 +1,212 @@
+﻿<Window x:Class="Task_Managment.Views.eventwindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
+         TextElement.Foreground="{DynamicResource MaterialDesignDarkForeground}"
+      TextElement.FontWeight="Regular"
+      TextElement.FontSize="13"
+      TextOptions.TextFormattingMode="Ideal"
+      TextOptions.TextRenderingMode="Auto"
+      Background="{DynamicResource MaterialDesignLightBackground}"
+      FontFamily="{DynamicResource MaterialDesignFont}"
+        DataContext="{StaticResource EventVM}"
+        Title="eventwindow" Height="440" Width="510">
+    <Grid>
+        <Border>
+            <Border.Background>
+                <ImageBrush ImageSource="\imagesForWpf\neneventwindow.jpg"/>
+            </Border.Background>
+        </Border>
+        <StackPanel>
+            <Label Content="Date"
+                   FontSize="20"
+                   FontWeight="Bold"
+               HorizontalAlignment="Left"
+               Margin= "50,40,0,0" 
+               VerticalAlignment="Top" 
+               Grid.Column="1" 
+               Foreground="Azure"/>
+            <materialDesign:PackIcon
+                  Kind="Calendar" 
+                        Width="40"
+                        Height="40"
+                        Foreground="Beige"
+                        Margin="50,1,1,1"
+            />
+            <TextBox x:Name="tbxdate"
+                     Margin="80,-35,110,0"
+                 TextWrapping="Wrap"
+                 VerticalAlignment="Top"
+                 Width="250"
+                Height="30"
+                 FontSize="18"
+                     IsEnabled="False"
+                 Text="{Binding TextBoxDay,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                 Foreground="Black"
+                     FontWeight="Bold"
+                     Background="#57FFFFFF"
+                   
+                 />
+
+        </StackPanel>
+        <StackPanel>
+            <Label Content="Expire Day"
+                   FontSize="20"
+                   FontWeight="Bold"
+               HorizontalAlignment="Left"
+               Margin= "50,120,0,0" 
+               VerticalAlignment="Top" 
+               Grid.Column="1" 
+               Foreground="Azure"/>
+            <materialDesign:PackIcon
+                  Kind="Calendar" 
+                        Width="40"
+                        Height="40"
+                        Foreground="Beige"
+                        Margin="50,1,1,1"
+            />
+            <materialDesign:DialogHost Name="PopupAddCustom"
+                                                       HorizontalAlignment="Center"
+                                                       VerticalAlignment="Center"
+                                                       IsOpen="{Binding isDialogOpen}"
+                                                       >
+                <materialDesign:DialogHost.DialogContent>
+                    <Grid Margin="-1"
+                                          Background="#F1F1F1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <StackPanel Grid.Row="0"
+                                                    Orientation="Horizontal">
+                            <Calendar x:Name="CombinedCalendar"
+                                                      materialDesign:CalendarAssist.HeaderBackground="#F1F1F1"
+                                                      materialDesign:CalendarAssist.HeaderForeground="Black"
+                                                      materialDesign:CalendarAssist.Orientation="Horizontal"
+                                                      Margin="0"
+                                                      Background="White"
+                                                      Foreground="Black"
+                                                      SelectedDate="{Binding SelectedCalendarDate}" />
+                        </StackPanel>
+                        <StackPanel Grid.Row="1"
+                                                    Margin="8"
+                                                    HorizontalAlignment="Right"
+                                                    Orientation="Horizontal"
+                                                    Background="#F1F1F1">
+               
+
+                            <Button Style="{StaticResource MaterialDesignFlatButton}"
+                                                    Command="{Binding CloseDialogCommand}"
+                                                    CommandParameter="0"
+                                                    Content="CANCEL" />
+                            <Button Style="{StaticResource MaterialDesignFlatButton}"
+                                                    Command="{Binding CloseDialogCommand}"
+                                                    CommandParameter="1"
+                                                    Content="OK" />
+                        </StackPanel>
+                    </Grid>
+                </materialDesign:DialogHost.DialogContent>
+            </materialDesign:DialogHost>
+            <Button Margin=" 250 -40 77 0"
+                    materialDesign:ButtonAssist.CornerRadius="15"
+                    ToolTip="MaterialDesignRaisedDarkButton with Round Corners"
+                    Content="Date"
+                    IsEnabled="True"
+                    Width="65"
+                    Background="#F1F1F1"
+                    Foreground="Black"
+                    BorderBrush="White"
+                    Command="{Binding OpenDiaLogCommand}"
+                    DockPanel.Dock="Left"
+                    CommandTarget="{Binding ElementName=PopupAddCustom}">
+            </Button>
+            <TextBox x:Name="expire"
+                 Margin="10,-40,110,0"
+                 TextWrapping="Wrap"
+                 VerticalAlignment="Center"
+                 Width="180"
+                 Height="30"
+                     FontSize="18"
+                 Grid.Column="1"
+                 Text="{Binding SelectedCalendarDate}"
+                 Foreground="Black"
+                     Background="#57FFFFFF"
+                 />
+
+        </StackPanel>
+        <StackPanel>
+            <Label Content="Note"
+               HorizontalAlignment="Left"
+               Margin="50,200,0,0"
+               VerticalAlignment="Top"
+               Grid.Column="1"
+               FontSize="20"
+               FontWeight="Bold"
+               Foreground="Azure"/>
+            <materialDesign:PackIcon
+                  Kind="TextBox" 
+                        Width="40"
+                        Height="40"
+                        Foreground="Beige"
+                       Margin="50,1,1,1"
+                />
+            <TextBox x:Name="tbxevent"
+                 Margin="80,-35,110,0"
+                 TextWrapping="Wrap"
+                 VerticalAlignment="Center"
+                 Width="250"
+                 Height="90"
+                     FontSize="18"
+                 Grid.Column="1"
+                 Text="{Binding TextBoxEvent}"
+                 Foreground="Black"
+                     Background="#57FFFFFF"
+                 />
+        </StackPanel>
+        <Button x:Name="btnsave"
+                BorderBrush="White"
+                Content="Save"
+                Foreground="black"
+                HorizontalAlignment="Left"
+                Margin="130,360,0,0" 
+                VerticalAlignment="Top" 
+                Command="{Binding SaveCM}" 
+                Width="100"
+                Height="40"
+                Background="#F1F1F1"
+                materialDesign:ButtonAssist.CornerRadius="15"
+                ToolTip="MaterialDesignRaisedDarkButton with Round Corners"
+                />
+        <Button x:Name="btnedit"
+                BorderBrush="White"
+                Content="Update"
+                HorizontalAlignment="Left"
+                Margin="255,360,0,0" 
+                VerticalAlignment="Top" 
+                Command="{Binding EditCM}" 
+                Width="100"
+                Background="#F1F1F1"
+                Foreground="Black"
+                Height="40"
+                materialDesign:ButtonAssist.CornerRadius="15"
+                ToolTip="MaterialDesignRaisedDarkButton with Round Corners"
+                />
+        <Button x:Name="btndelete"
+                Content="Delete"
+                BorderBrush="White"
+                Background="#F1F1F1"
+                Foreground="Black"
+                HorizontalAlignment="Left"
+                Margin="380,360,0,0" 
+                VerticalAlignment="Top" 
+                Command="{Binding DeleteCM}" 
+                Width="100"
+                Height="40"
+                materialDesign:ButtonAssist.CornerRadius="15"
+                ToolTip="MaterialDesignRaisedDarkButton with Round Corners"
+                />
+    </Grid>
+</Window>
